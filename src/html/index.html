@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... [otros elementos del head] ... -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta charset="UTF-8">
+    <title>Model Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding-top: 50px;
+        }
+        .content {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding-top: 1px;
+            padding-left: 100px;
+            padding-right: 100px;
+            padding-bottom: 50px;
+            justify-content: center;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 700px;
+        }
+        label {
+            font-weight: 600;
+            margin-top: 10px;
+            display: block; /* Makes the label take the full width */
+            color: #333;
+        }
+        input[type="text"],
+        textarea,
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #5cb85c; /* Changed to a green color */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px; /* Add space between buttons */
+        }
+        button:hover {
+            background-color: #4cae4c; /* A darker green for hover */
+        }
+        #clearButton {
+            background-color: #d9534f; /* A red color for the clear button */
+        }
+        #clearButton:hover {
+            background-color: #c9302c; /* A darker red for hover */
+        }
+        #predictionResult {
+            background-color: #e1e1e1; /* A light gray background for results */
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+            display: none; /* Start hidden */
+        }
+        #resultText {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        #uploadedImage {
+            max-width: 500px;
+            max-height: 300px;
+            margin-bottom: 20px;
+        }
+        #alertBox {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 80%;
+            max-width: 400px;
+        }
+        #alertBox p {
+            margin: 0;
+            padding: 15px;
+            line-height: 1.5;
+            font-size: 16px;
+            color: #333;
+        }
+        #alertBox button {
+            background-color: #5bc0de; /* A blue color for the alert button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #alertBox button:hover {
+            background-color: #31b0d5; /* A darker blue for hover */
+        }
+        /* Contenedor principal para flexbox */
+        #mainContainer {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alinea los elementos al inicio verticalmente */
+            width: 100%;
+        }
+
+        /* Estilos para el formulario y la vista previa de la imagen */
+        form, #imagePreview {
+            margin: 10px;
+        }
+        #imagePreview {
+            width: calc(50% - 10px); /* Ajusta el ancho de la imagen */
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Centra la imagen verticalmente y horizontalmente */
+        }
+        /* Asegúrate de que la imagen no sea demasiado grande */
+        #uploadedImage {
+            max-width: 100%;
+            max-height: 300px; /* Ajusta la altura máxima de la imagen */
+            border-radius: 8px; /* Opcional: bordes redondeados para la imagen */
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <h2 >Bienvenido a la Herramienta de Detección de Fake News Multimodal</h2>
+    <p class="content-text">
+        Esta herramienta utiliza un modelo avanzado de Machine Learning para identificar noticias falsas (fake news) utilizando tanto texto como imágenes. Al analizar conjuntamente el contenido textual y visual, nuestro modelo puede predecir con mayor precisión si una noticia es falsa o no. Simplemente ingresa un texto y carga una imagen relacionada, y nuestro sistema utilizará técnicas de aprendizaje profundo para evaluar la veracidad de la información presentada.
+    </p>
+</div>
+<!-- Contenedor principal -->
+<div id="mainContainer">
+    <div>
+        <h1>Model Prediction</h1>
+        <form id="predictionForm">
+            <label for="textInput">Texto:</label>
+            <textarea id="textInput" name="text" rows="4" maxlength="200"></textarea><br><br>
+
+            <label for="imageInput">Imagen:</label>
+            <input type="file" id="imageInput" name="image" accept="image/*" ><br><br>
+
+            <button type="submit">Predict</button>
+            <button type="button" id="clearButton">Clear Data</button>
+        </form>
+
+    </div>
+</div>
+<div id="imagePreview">
+    <img id="uploadedImage" src="" alt="Imagen cargada aparecerá aquí." hidden>
+</div>
+
+<div id="predictionResult" style="display: none;">
+    <h2>Prediction Result:</h2>
+    <i id="predictionIcon" class="" aria-hidden="true"></i>
+    <p id="resultText"></p>
+</div>
+<!-- Cuadro de alerta personalizado -->
+<div id="alertBox">
+    <p id="alertMessage"></p>
+    <button onclick="closeAlert()">OK</button>
+</div>
+<script>
+// Validación del texto
+function validateText(text) {
+    // Expresión regular que permite solo caracteres alfanuméricos y espacios
+    const regex = /^[a-zA-Z0-9\s]*$/;
+    if (!regex.test(text)) {
+        showAlert("El texto contiene caracteres no permitidos.");
+        return false;
+    }
+    if (text.trim().length === 0) {
+        showAlert("El texto no puede estar vacío o contener solo espacios.");
+        return false;
+    }
+    return true;
+}
+
+// Manejador del envío del formulario
+document.getElementById("predictionForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const text = document.getElementById("textInput").value;
+    const imageFile = document.getElementById("imageInput").files[0];
+
+    if (text !== "" && !validateText(text)) {
+        return; // Detener si el texto no es válido
+    }
+    if (text === "" && !imageFile) {
+        showAlert("Por favor, ingrese texto o seleccione una imagen.");
+        return;
+    }
+
+    const formData = new FormData();
+    if (text !== "") formData.append("text", text);
+    if (imageFile) formData.append("file", imageFile);
+
+    const response = await fetch('/predict', {
+        method: 'POST',
+        body: formData
+    });
+
+    if (response.ok) {
+        const result = await response.json();
+
+        document.getElementById("resultText").textContent = result.predictions;
+
+        // Cambiar el ícono dependiendo del resultado
+        const iconElement = document.getElementById("predictionIcon");
+
+        if (result.predictions === "Es un Fake News") {
+            iconElement.className = "fas fa-times-circle"; // Ícono de círculo con cruz, en rojo
+            iconElement.style.color = "red";
+        } else if (result.predictions === "No es un Fake News") {
+            iconElement.className = "fas fa-check-circle"; // Ícono de círculo con marca de verificación, en verde
+            iconElement.style.color = "green";
+        } else {
+            iconElement.className = "";
+        }
+
+        document.getElementById("predictionResult").style.display = 'block';
+    } else {
+        showAlert("Error: " + response.statusText);
+    }
+});
+
+// Manejador para limpiar los datos
+document.getElementById("clearButton").addEventListener("click", function () {
+    document.getElementById("textInput").value = "";
+    document.getElementById("imageInput").value = "";
+    document.getElementById("uploadedImage").hidden = true;
+    document.getElementById("uploadedImage").src = "";
+    document.getElementById("resultText").textContent = "";
+    document.getElementById("predictionResult").style.display = 'none';
+});
+
+// Manejador para el input de imagen
+document.getElementById("imageInput").addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (file && file.type.match('image.*')) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("uploadedImage").src = e.target.result;
+            document.getElementById("uploadedImage").hidden = false;
+        }
+        reader.readAsDataURL(file);
+    } else {
+        showAlert("Por favor, seleccione un archivo de imagen");
+        document.getElementById("uploadedImage").hidden = true;
+        document.getElementById("imageInput").value = "";
+    }
+});
+
+        // Función para mostrar el cuadro de alerta personalizado
+        function showAlert(message) {
+            document.getElementById("alertMessage").textContent = message;
+            document.getElementById("alertBox").style.display = "block";
+        }
+
+        // Función para cerrar el cuadro de alerta
+        function closeAlert() {
+            document.getElementById("alertBox").style.display = "none";
+        }
+</script>
+
+</body>
+</html>

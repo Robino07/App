@@ -1,0 +1,20 @@
+# Ignorar el entorno virtual
+env/
+
+# Ignorar archivos de Python compilados
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorar otros archivos que no se deben incluir en la imagen Docker
+*.git
+*.vscode
+*.idea
+.DS_Store
+*.log
+
+# Otros
+*.pyd
+*.swp
+*.bak
+*.tmp
