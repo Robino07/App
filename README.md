@@ -23,9 +23,25 @@ The model used in this project is a convolutional neural network (CNN), which is
 
 ## Installation
  
+You must have Docker Desktop installed:
+
+For windows:
+
+https://docs.docker.com/desktop/install/windows-install
+
+For Linux:
+
+https://docs.docker.com/desktop/install/linux-install/
+
+For Mac
+
+https://docs.docker.com/desktop/install/mac-install/
+
+Once Docker is installed, download the project from:
+
 download the project from https://github.com/Robino07/App
 
-Open the windows console in the path where you downloaded the project and execute the following instructions:
+Open the windows console and run the following commands in the same path where the Dockerfile is located.
 
  - docker build -t api_model . --no-cache
  - docker run -p 5000:5000 api_model

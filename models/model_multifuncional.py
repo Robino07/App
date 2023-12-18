@@ -66,6 +66,7 @@ def get_prediction_string(prediction):
         result = f"Es un Fake News con una probabilidad del: {formatted_prediction}"
     else:
         result = f"No es un Fake News con una probabilidad del: {formatted_prediction}"
+    return result
 
 
 # Cargar el procesador CLIP
