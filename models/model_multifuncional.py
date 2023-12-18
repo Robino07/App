@@ -61,7 +61,11 @@ def context_padding(inputs, context_length=77):
 
 def get_prediction_string(prediction):
     """ Convierte la predicción en una cadena de texto representativa """
-    return "Es un Fake News" if prediction <= 0.5 else "No es un Fake News"
+    formatted_prediction = "{:.2%}".format(prediction)
+    if prediction <= 0.5:
+        result = f"Es un Fake News con una probabilidad del: {formatted_prediction}"
+    else:
+        result = f"No es un Fake News con una probabilidad del: {formatted_prediction}"
 
 
 # Cargar el procesador CLIP
