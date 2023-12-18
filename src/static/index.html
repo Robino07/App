@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Model Prediction</title>
+    <link rel="stylesheet" href="static/css/index.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+</head>
+<body>
+
+
+<div class="section" id="topSection">
+    <div class="container content">
+        <div id="titleContainer">
+        <h1 class="title">Advanced Fake News Detection Tool</h1>
+        <h2 class="subtitle has-text-weight-bold"> Protect yourself from misinformation and make informed decisions</h2>
+        </div>
+        <!-- <p class="subtitle">
+            Esta herramienta utiliza un modelo avanzado de Machine Learning para identificar noticias falsas (fake news) utilizando tanto texto como imágenes. Al analizar conjuntamente el contenido textual y visual, nuestro modelo puede predecir con mayor precisión si una noticia es falsa o no. Simplemente ingresa un texto y carga una imagen relacionada, y nuestro sistema utilizará técnicas de aprendizaje profundo para evaluar la veracidad de la información presentada.
+        </p>
+        -->
+
+    </div>
+</div>
+<div class="section" id="descriptionSection">
+    <div class="container content" id="descriptionContainer">
+        <p class="subtitle">
+            Our fake news detection tool helps you separate truth from fiction. It analyzes both text and images to more accurately identify fake news.
+        </p>
+        <p>
+            Simply enter text or upload an image, and our system will use deep learning techniques to assess the veracity of the information presented.
+        </p>
+    </div>
+</div>
+
+<div class="section">
+    <div class="columns is-gapless is-multiline is-mobile">
+        <div class="column is-half">
+            <section>
+                <div class="container">
+                    <h2 class="title" id="modelTitle">Model Prediction</h1>
+                    <form id="predictionForm">
+
+                        <div class="field" id="textField">
+                            <label class="label" for="textInput">Text:</label>
+                            <div class="control">
+                                <textarea class="textarea" id="textInput" name="text" rows="4" ></textarea><br><br>
+                            </div>
+                        </div>
+            
+                        <div class="field" id="imageField">
+                            <label class="label" for="imageInput">Image:</label>
+                            <div class="control">
+                                <input class="input" type="file" id="imageInput" name="image" accept="image/*" ><br><br>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-primary" type="submit">Predict</button>
+                                <button class="button is-primary" type="button" id="clearDataButton">Clear Data</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="container">
+                    <!-- Elemento para mostrar la imagen cargada -->
+                    <div id="imagePreview" style="display: none;">
+                        <img id="uploadedImage" src="" hidden>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="column  is-half">
+            <div class="section">
+                <div class="container">
+                    <!-- 'title' para el título del resultado y 'box' para resaltar el contenido -->
+                    <div id="predictionResult">
+                        <h2 class="title">Prediction</h2>
+                        <div class="box">
+                            <p id="resultText"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+</div>
+
+
+<script src="static/js/main.js"></script>
+</body>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            This tool is ideal for verifying the authenticity of news in a world where misinformation spreads rapidly. Our goal is to provide a quick and reliable way to filter out disinformation and promote greater trust in the media.
+            <br> Multimodal Fake News Detection Model <strong>by VeritasCorp © 2023</strong>
+        </p>
+    </div>
+</footer>
+</html>

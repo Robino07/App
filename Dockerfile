@@ -12,6 +12,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar el resto del código de la aplicación al directorio de trabajo
 COPY . .
+COPY ./src/static /app/src/static
+
 
 # Exponer el puerto en el que se ejecutará la aplicación
 EXPOSE 5000

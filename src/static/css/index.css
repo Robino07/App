@@ -1,0 +1,38 @@
+#topSection {
+    background-color: #6FB3D1;
+}
+
+#topSection h1 {
+    color: #fff;
+    font-size: 3em;
+    padding: 10px;
+    text-align: center;
+}
+
+#topSection h2 {
+    color: #fff;
+    font-size: 1em;
+    text-align: center;
+}
+
+#descriptionSection {
+    background-color: #6C91CC;
+}
+
+#descriptionSection div p {
+    color: #fff;
+    font-size: 1em;
+}
+
+#imagePreview img {
+    max-width: 50% !important;
+    max-height: 300px !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+#clearButton {
+    background-color: #d9534f; /* A red color for the clear button */
+}
+#clearButton:hover {
+    background-color: #c9302c; /* A darker red for hover */
+}

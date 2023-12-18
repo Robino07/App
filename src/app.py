@@ -1,14 +1,12 @@
 import io
-import os
 import sys
 print(sys.path)
 import uvicorn
 from PIL import Image
-from fastapi import FastAPI
 from fastapi import File, UploadFile
 from fastapi import Form
 from fastapi.responses import HTMLResponse
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from models.model_multifuncional import predice as predice_multifuncional
@@ -19,19 +17,12 @@ from models.model_imagen import predice as predice_imagen
 app = FastAPI()
 
 # Configurar el directorio para servir archivos estáticos
-app.mount("/static", StaticFiles(directory="src/html"), name="static")
-
+app.mount('/static', StaticFiles(directory='src/static', html=True), name='static')
 @app.get("/", response_class=HTMLResponse)
-async def read_index(request: Request):
-    # Nota: No necesitas abrir el archivo manualmente si usas StaticFiles
-    return HTMLResponse(content=open(os.path.join('src', 'html', 'index.html'), 'r').read())
+async def index():
+    with open("src/static/index.html", "r") as file:
+        return file.read()
 
-
-#@app.get("/", response_class=HTMLResponse)
-#async def index():
-#    with open("html/index.html", "r", encoding="utf-8") as file:  # Especifica la codificación aquí
-#        return HTMLResponse(content=file.read())
-    
 @app.post("/predict")
 async def predict(text: str = Form(None), file: UploadFile = File(None)):
     print(f"sys.path: {sys.path}")
