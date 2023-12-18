@@ -61,10 +61,13 @@ def context_padding(inputs, context_length=77):
 
 def get_prediction_string(prediction):
     """ Convierte la predicción en una cadena de texto representativa """
-    formatted_prediction = "{:.2%}".format(prediction)
+
     if prediction <= 0.5:
+        fake = 1 - prediction
+        formatted_prediction = "{:.2%}".format(fake)
         result = f"Es un Fake News con una probabilidad del: {formatted_prediction}"
     else:
+        formatted_prediction = "{:.2%}".format(prediction)
         result = f"No es un Fake News con una probabilidad del: {formatted_prediction}"
     return result
 
